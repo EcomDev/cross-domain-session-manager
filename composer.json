@@ -1,7 +1,7 @@
 {
     "name": "ecomdev/cross-domain-session-manager",
     "description": "Async Cross Domain Session Manager Application",
-    "type": "project",
+    "type": "library",
     "require": {
         "react/event-loop": "^0.4.3",
         "react/http": "^0.8.1"
@@ -33,5 +33,8 @@
     "minimum-stability": "dev",
     "keywords": [
         "reactphp", "session"
+    ],
+    "bin": [
+        "bin/server"
     ]
 }
