@@ -1,0 +1,25 @@
+default:
+  suites:
+    default:
+      contexts:
+        - FeatureContext:
+            sessionPool:
+              - session_one
+              - session_two
+              - session_three
+            sessionCookieName: sharedSession
+            urls:
+              script: http://base-domain.test:8080/multi-domain/base.js
+              domain_one: http://domain-one.test:8080/
+              domain_two: http://domain-two.test:8080/
+  extensions:
+    Behat\MinkExtension:
+      browser_name: 'chrome'
+      sessions:
+        session_one:
+          selenium2: ~
+        session_two:
+          selenium2: ~
+        session_three:
+          selenium2: ~
+
