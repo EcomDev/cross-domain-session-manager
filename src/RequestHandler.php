@@ -81,7 +81,7 @@ class RequestHandler
         $query = $request->getQueryParams();
 
         if (isset($query['token'])) {
-            return '// token is already assigned';
+            return "document.dispatchEvent(new Event('session_complete',{bubbles:true}));";
         }
 
         $tokenUrl = sprintf(
