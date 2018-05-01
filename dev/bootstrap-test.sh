@@ -22,7 +22,7 @@ wget -q -O $SCRIPT_DIR/selenium.jar http://selenium-release.storage.googleapis.c
 
 trap "trap_ctrlc" 2
 
-php $BASE_DIR/bin/server 127.0.0.1:8888 > /dev/null 2>&1 & PHP_PID=$!
+php $BASE_DIR/bin/server --cookie-lifetime=5 127.0.0.1:8888 > /dev/null 2>&1 & PHP_PID=$!
 java -jar $SCRIPT_DIR/selenium.jar > /dev/null 2>&1 & SELENIUM_PID=$!
 nginx -c $SCRIPT_DIR/nginx.conf -p $SCRIPT_DIR
 

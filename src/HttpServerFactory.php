@@ -9,10 +9,30 @@ namespace EcomDev\CrossDomainSessionManager;
 
 class HttpServerFactory
 {
-    public static function createServer(SessionStorage $sessionStorage = null)
-    {
-        $sessionStorage = $sessionStorage ?: new SessionStorage();
+    /**
+     * @var SessionStorageFactory
+     */
+    private $storageFactory;
 
+    public function __construct(SessionStorageFactory $storageFactory = null)
+    {
+        $this->storageFactory = $storageFactory ?? new SessionStorageFactory();
+    }
+
+    public function createServer()
+    {
+        return $this->createServerWithStorage($this->storageFactory->createEmpty());
+    }
+
+    public function createServerFromPersistedState(string $stateFile)
+    {
+        return $this->createServerWithStorage(
+            $this->storageFactory->createFromFile($stateFile)
+        );
+    }
+
+    private function createServerWithStorage(SessionStorage $sessionStorage)
+    {
         return new HttpServer(
             new RequestHandlerFactory($sessionStorage)
         );
