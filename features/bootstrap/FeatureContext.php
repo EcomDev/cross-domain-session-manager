@@ -60,8 +60,6 @@ class FeatureContext extends MinkContext
         } else {
             $session->reset();
         }
-
-        $session->wait(1000);
     }
 
     /**
@@ -170,6 +168,13 @@ class FeatureContext extends MinkContext
         );
     }
 
+    /**
+     * @When :visitor does not interact with website for :seconds seconds
+     */
+    public function doesNotInteractWithWebsite($visitor, $seconds)
+    {
+        $this->getActorSession($visitor)->wait($seconds*1000);
+    }
 
     private function fetchSessionIdForVisitor($visitor, $url = null)
     {

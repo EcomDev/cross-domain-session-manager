@@ -1,17 +1,15 @@
 #!/usr/bin/env php
 <?php
 
-use Psr\Http\Message\ServerRequestInterface;
-use React\EventLoop\Factory;
-use React\Http\Response;
+use Symfony\Component\Console\Application;
+use EcomDev\CrossDomainSessionManager\StartServerCommand;
 
 require __DIR__ . '/../vendor/autoload.php';
 
 
-$server = \EcomDev\CrossDomainSessionManager\HttpServerFactory::createServer();
-$server->run(
-    new \EcomDev\CrossDomainSessionManager\HttpServerSettings(
-        isset($argv[1]) ? $argv[1] : '0.0.0.0:8888',
-        isset($argv[2]) ? $argv[2] :'sharedSession'
-    )
-);
+$application = new Application();
+
+$application->add(new StartServerCommand('start-server'));
+$application->setDefaultCommand('start-server', true);
+
+exit($application->run());

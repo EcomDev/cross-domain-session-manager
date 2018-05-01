@@ -27,3 +27,9 @@ Feature: Generation of Session ID for visitors
       And "John" visits session script
     Then "John" different session ID than "Bob"
 
+  Scenario: Visitor session expire
+    Given I have a visitor "Bob"
+      And "Bob" has session ID assigned
+    When "Bob" does not interact with website for "5" seconds
+      And "Bob" visits session script
+    Then "Bob" gets new session ID assigned

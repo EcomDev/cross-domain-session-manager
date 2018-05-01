@@ -25,13 +25,16 @@ class HttpServer
         $this->requestHandlerFactory = $requestHandlerFactory;
     }
 
-    public function run(HttpServerSettings $settings)
+    public function run(ServerSettings $settings)
     {
         $loop = Factory::create();
-        $server = new StreamingServer($this->requestHandlerFactory->createHandler($settings));
+        $requestHandler = $this->requestHandlerFactory->createHandler($settings, $loop);
+
+        $server = new StreamingServer($requestHandler);
 
         $socket = new SocketServer($settings->getBind(), $loop);
         $server->listen($socket);
+        $loop->addPeriodicTimer(1, [$requestHandler, 'cleanUp']);
         $loop->run();
     }
 }
